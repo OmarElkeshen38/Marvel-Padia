@@ -1,11 +1,21 @@
-'use clint';
+'use client';
 
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { FC } from 'react';
 
 const Navbar: FC = () => {
 
-  const [querySearch, setQuerySearch] = useState<string>('');
+  const router = useRouter();
+
+  const handelSearch = (e) => {
+    if (e.target.value === '') {
+      router.push(`/`);
+    }
+    else {
+      router.push(`/search?query=${e.target.value}`);
+    }
+  }
 
     return (
       <header>
@@ -18,10 +28,10 @@ const Navbar: FC = () => {
           <div className="flex-none gap-2">
             <div className="form-control">
               <input
-                value={querySearch}
                 type="text"
-                placeholder="Search"
+                placeholder="Search for Character"
                 className="input input-bordered w-24 md:w-auto"
+                onKeyUp={handelSearch}
               />
             </div>
           </div>
